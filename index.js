@@ -13,9 +13,7 @@ const CHATWORK_ROOM_ID = "440162416"; // 案内を流したいチャット部屋
 // 【あなたの量産したサブ垢のCodeSandbox URLリスト】（末尾のスラッシュは無し）
 const SANDBOX_URLS = [
   "https://jhsnlx-8080.csb.app",
-  "https://jhsnlx-8080.csb.app",
-  "",
-  ""
+  "https://v52l6d-8080.csb.app/"
 ];
 // ===================================================
 
@@ -30,7 +28,7 @@ async function checkAllInstances() {
 
   const raceTask = async (baseUrl) => {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 3000); // 3秒でタイムアウト（死んでる垢は応答が遅いため）
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 3秒でタイムアウト（死んでる垢は応答が遅いため）
 
     try {
       // 💡 超軽量のピンポンダッシュでクレジット消費を完全に防ぐ
