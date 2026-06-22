@@ -8,13 +8,14 @@ app.use(express.urlencoded({ extended: true }));
 // ================== 【設定エリア】 ==================
 const PORT = process.env.PORT || 3000;
 const CHATWORK_API_TOKEN = "47f3a071fe49e7259100d70071c986b7";
-const CHATWORK_ROOM_ID = "440046837"; // 案内を流したいチャット部屋のID
+const CHATWORK_ROOM_ID = "440162416"; // 案内を流したいチャット部屋のID
 
 // 【あなたの量産したサブ垢のCodeSandbox URLリスト】（末尾のスラッシュは無し）
 const SANDBOX_URLS = [
-  "https://xxxx-8080.csb.app",
-  "https://yyyy-8080.csb.app",
-  "https://zzzz-8080.csb.app"
+  "https://jhsnlx-8080.csb.app",
+  "https://jhsnlx-8080.csb.app",
+  "",
+  ""
 ];
 // ===================================================
 
