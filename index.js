@@ -10,10 +10,10 @@ const PORT = process.env.PORT || 3000;
 const CHATWORK_API_TOKEN = "47f3a071fe49e7259100d70071c986b7";
 const CHATWORK_ROOM_ID = "440162416"; // 案内を流したいチャット部屋のID
 
-// 【あなたの量産したサブ垢のCodeSandbox URLリスト】（末尾のスラッシュは無し）
+// 【あなたの量産したサブ垢のCodeSandbox URLリスト】
 const SANDBOX_URLS = [
   "https://jhsnlx-8080.csb.app",
-  "https://v52l6d-8080.csb.app/"
+  "https://v52l6d-8080.csb.app/" // 末尾にスラッシュがあってもコード側で自動修復します
 ];
 // ===================================================
 
@@ -26,12 +26,15 @@ let latestAvailableUrl = "現在、利用可能なサーバーがありません
 async function checkAllInstances() {
   console.log(`[${new Date().toLocaleString("ja-JP")}] 全サブ垢の生存確認を開始します...`);
 
-  const raceTask = async (baseUrl) => {
+  const raceTask = async (url) => {
+    // 💡 安全装置: URLの末尾にスラッシュ「/」があれば自動で削る
+    const baseUrl = url.endsWith('/') ? url.slice(0, -1) : url;
+    
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000); // 3秒でタイムアウト（死んでる垢は応答が遅いため）
+    const timeoutId = setTimeout(() => controller.abort(), 8000); // 8秒でタイムアウト
 
     try {
-      // 💡 超軽量のピンポンダッシュでクレジット消費を完全に防ぐ
+      // 超軽量のピンポンダッシュでクレジット消費を完全に防ぐ
       const res = await fetch(`${baseUrl}/api/ping`, {
         signal: controller.signal,
         headers: { "User-Agent": "Sandbox-Watcher-Bot" }
@@ -103,7 +106,14 @@ async function sendChatworkMessage(message) {
 }
 
 // ---------------------------------------------------
-// 💬 ② Chatworkに「/youtube」と打たれた時の手動いつでも受付
+// 🌐 ② ブラウザ確認・テスト用の Webhook GET 窓口
+// ---------------------------------------------------
+app.get('/webhook', (req, res) => {
+  res.status(200).send("Webhook window is working perfectly! (GET OK)");
+});
+
+// ---------------------------------------------------
+// 💬 ③ Chatworkに「/youtube」と打たれた時の手動いつでも受付
 // ---------------------------------------------------
 app.post('/webhook', async (req, res) => {
   res.status(200).send("OK"); // タイムアウトしないよう即座に応答
